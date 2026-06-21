@@ -1,0 +1,863 @@
+/* ============================================
+   ESTILOS GENERALES
+   ============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a0a1e, #2d1b3d, #1a0a1e);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Comic Sans MS', 'Segoe UI', cursive, sans-serif;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.6s ease;
+}
+
+/* Cuando la caja se abre, desplazar todo el contenedor hacia arriba */
+.container.shift-up {
+    transform: translateY(-200px);
+}
+
+/* ============================================
+   CAJA DE REGALO
+   ============================================ */
+.gift-box {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    cursor: pointer;
+    transition: transform 0.6s ease;
+    z-index: 20;
+}
+
+.gift-box:hover {
+    transform: scale(1.05);
+}
+
+/* CUERPO DE LA CAJA */
+.gift-body {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 75%;
+    background: linear-gradient(135deg, #ff6b9d, #e8437a);
+    border-radius: 0 0 20px 20px;
+    border: 4px solid #ffd93d;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.5), inset 0 -10px 30px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+/* PATRÓN DE PUNTOS EN LA CAJA */
+.gift-body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,217,61,0.3) 2px, transparent 2px);
+    background-size: 30px 30px;
+}
+
+/* CINTA VERTICAL */
+.gift-ribbon-vertical {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 100%;
+    background: linear-gradient(135deg, #ffd93d, #f7c948);
+    box-shadow: 0 0 20px rgba(255,217,61,0.5);
+    z-index: 2;
+    border-radius: 5px;
+}
+
+/* CINTA HORIZONTAL */
+.gift-ribbon-horizontal {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 100%;
+    height: 40px;
+    background: linear-gradient(135deg, #ffd93d, #f7c948);
+    box-shadow: 0 0 20px rgba(255,217,61,0.5);
+    z-index: 2;
+    border-radius: 5px;
+}
+
+/* LAZO DE LA CAJA */
+.gift-bow {
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90px;
+    height: 70px;
+    z-index: 10;
+    filter: drop-shadow(0 10px 20px rgba(255,217,61,0.6));
+}
+
+.bow-loop {
+    position: absolute;
+    width: 50px;
+    height: 45px;
+    background: linear-gradient(135deg, #ffd93d, #f7c948);
+    border-radius: 50% 50% 50% 0;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.bow-loop.left {
+    left: 0;
+    transform: rotate(-20deg);
+}
+
+.bow-loop.right {
+    right: 0;
+    transform: rotate(70deg) scaleX(-1);
+}
+
+.bow-center {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 25px;
+    height: 25px;
+    background: #f7c948;
+    border-radius: 50%;
+    border: 3px solid #ffd93d;
+    box-shadow: 0 0 20px rgba(255,217,61,0.8);
+}
+
+/* ETIQUETA DE LA CAJA */
+.gift-tag {
+    position: absolute;
+    bottom: 20px;
+    right: -10px;
+    background: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-family: 'Comic Sans MS', cursive;
+    font-weight: 900;
+    color: #4a2c5e;
+    font-size: 0.8rem;
+    border: 3px solid #ffd93d;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transform: rotate(8deg);
+    z-index: 5;
+    animation: parpadear 1.5s ease-in-out infinite;
+}
+
+@keyframes parpadear {
+    0%, 100% { opacity: 1; transform: rotate(8deg) scale(1); }
+    50% { opacity: 0.7; transform: rotate(8deg) scale(1.05); }
+}
+
+/* TEXTO INSTRUCCIONES */
+.gift-instruction {
+    color: #ffd93d;
+    font-family: 'Comic Sans MS', cursive;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-top: 20px;
+    text-shadow: 0 0 20px rgba(255,217,61,0.3);
+    animation: flotarTexto 2s ease-in-out infinite;
+    z-index: 15;
+    background: rgba(74, 44, 94, 0.8);
+    padding: 10px 25px;
+    border-radius: 40px;
+    border: 3px solid #ffd93d;
+    transition: all 0.5s ease;
+    position: relative;
+    top: 0;
+}
+
+@keyframes flotarTexto {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+}
+
+/* ============================================
+   EFECTO DE APERTURA DE LA CAJA
+   ============================================ */
+.gift-box.abierto .gift-body {
+    animation: abrirCaja 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes abrirCaja {
+    0% { transform: scale(1) rotate(0deg); opacity: 1; }
+    30% { transform: scale(1.1) rotate(-5deg); opacity: 1; }
+    100% { transform: scale(0) rotate(20deg); opacity: 0; }
+}
+
+.gift-box.abierto .gift-bow {
+    animation: volarLazo 0.8s ease-out forwards;
+}
+
+@keyframes volarLazo {
+    0% { transform: translateX(-50%) scale(1) rotate(0deg); opacity: 1; }
+    100% { transform: translateX(-50%) translateY(-200px) scale(0.5) rotate(360deg); opacity: 0; }
+}
+
+.gift-box.abierto .gift-ribbon-vertical,
+.gift-box.abierto .gift-ribbon-horizontal {
+    animation: desaparecerCinta 0.6s ease-out forwards;
+}
+
+@keyframes desaparecerCinta {
+    0% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.5); }
+}
+
+.gift-box.abierto .gift-tag {
+    animation: volarEtiqueta 0.8s ease-out forwards;
+}
+
+@keyframes volarEtiqueta {
+    0% { transform: rotate(8deg) scale(1); opacity: 1; }
+    100% { transform: rotate(40deg) translateY(-150px) scale(0.3); opacity: 0; }
+}
+
+/* ============================================
+   CONTENEDOR DEL CUPÓN (oculto inicialmente)
+   ============================================ */
+.cupon-container {
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform: scale(0.8) rotate(-5deg);
+    margin-top: 0;
+}
+
+.cupon-container.visible {
+    max-height: 2000px;
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    margin-top: 10px;
+    overflow: visible;
+    position: relative;
+    z-index: 1000;
+}
+
+/* Mover la caja hacia arriba cuando se abre para que el cupón quede más cerca */
+.gift-box.abierto {
+    transform: translateY(-50px);
+}
+/* Cuando la caja está abierta, subir la instrucción "¡FELIZ DÍA DEL PADRE!" */
+.gift-box.abierto + .gift-instruction {
+    top: -90px;
+}
+
+    .container.shift-up {
+        transform: translateY(-140px);
+    }
+
+/* ============================================
+   CUPÓN RICHARD WATERSON
+   ============================================ */
+.cupon {
+    background: #fff8f0;
+    width: 100%;
+    padding: 35px 30px;
+    border-radius: 30px 10px 30px 10px;
+    box-shadow:
+        0 0 0 6px #ff6b9d,
+        0 0 0 12px #ffd93d,
+        0 0 0 18px #6bcbff,
+        0 20px 60px rgba(0,0,0,0.5);
+    text-align: center;
+    position: relative;
+    border: 4px dashed #ff6b9d;
+    transition: transform 0.3s ease;
+    margin-top: 10px;
+}
+
+.cupon:hover {
+    transform: scale(1.02) rotate(-1deg);
+}
+
+/* CABEZA DE RICHARD */
+.richard-avatar {
+    position: absolute;
+    top: -55px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 110px;
+    height: 110px;
+    background: #fff8f0;
+    border-radius: 50%;
+    border: 6px solid #ffd93d;
+    box-shadow: 0 0 0 8px #ff6b9d, 0 0 0 12px #6bcbff, 0 15px 30px rgba(0,0,0,0.2);
+    padding: 5px;
+    z-index: 999;
+    animation: flotarRichard 3s ease-in-out infinite;
+    overflow: hidden;
+}
+
+.richard-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+}
+
+@keyframes flotarRichard {
+    0%, 100% { transform: translateX(-50%) translateY(0px) rotate(-5deg); }
+    50% { transform: translateX(-50%) translateY(-12px) rotate(5deg); }
+}
+
+.cupon-content {
+    margin-top: 30px;
+    position: relative;
+    z-index: 1;
+}
+
+/* CABECERA RICHARD */
+.richard-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 5px;
+    background: linear-gradient(135deg, #ffd93d, #ff6b9d);
+    padding: 10px 25px;
+    border-radius: 60px 20px 60px 20px;
+    border: 5px solid #6bcbff;
+    box-shadow: 0 8px 0 #4a8db7;
+    flex-wrap: wrap;
+}
+
+.richard-icon {
+    font-size: 2.8rem;
+    animation: saltarIcono 2s ease-in-out infinite;
+    filter: drop-shadow(0 10px 15px rgba(255, 107, 157, 0.4));
+}
+
+.richard-icon:last-child {
+    animation-delay: 0.5s;
+}
+
+@keyframes saltarIcono {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(10deg); }
+}
+
+.richard-header h1 {
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: #4a2c5e;
+    text-shadow: 4px 4px 0 #ffd93d, -2px -2px 0 #ff6b9d;
+    letter-spacing: 2px;
+    font-family: 'Comic Sans MS', 'Arial Black', cursive;
+}
+
+.subtitulo {
+    background: #6bcbff;
+    color: #4a2c5e;
+    display: inline-block;
+    padding: 8px 35px;
+    border-radius: 40px;
+    font-weight: 900;
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    margin: 10px 0 15px 0;
+    border: 4px solid #ffd93d;
+    text-transform: uppercase;
+    box-shadow: 0 4px 0 #4a8db7;
+    font-family: 'Comic Sans MS', cursive;
+}
+
+/* TEXTO PRINCIPAL */
+.texto-cupon {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #4a2c5e;
+    margin: 15px 0;
+    line-height: 1.3;
+    padding: 20px 0;
+    border-top: 6px dotted #ff6b9d;
+    border-bottom: 6px dotted #ff6b9d;
+    font-family: 'Comic Sans MS', 'Arial Black', cursive;
+    text-transform: uppercase;
+    background: linear-gradient(to right, #fff8f0, #fff0f5);
+    border-radius: 20px;
+}
+
+.texto-cupon .limon {
+    color: #4a2c5e;
+    background: #ffd93d;
+    padding: 0 20px;
+    border-radius: 30px 10px 30px 10px;
+    display: inline-block;
+    border: 4px solid #ff6b9d;
+    box-shadow: 0 6px 0 #ff6b9d;
+    transform: rotate(-2deg);
+}
+
+.texto-cupon small {
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-top: 10px;
+    font-family: 'Comic Sans MS', cursive;
+    text-transform: none;
+    background: #6bcbff;
+    padding: 5px 20px;
+    border-radius: 40px;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    border: 3px solid #ffd93d;
+    color: #4a2c5e;
+}
+
+/* ============================================
+   CLÁUSULAS OCULTAS
+   ============================================ */
+.clausulas-container {
+    margin: 20px 0;
+    position: relative;
+}
+
+.btn-revelar {
+    background: linear-gradient(135deg, #ffd93d, #ff6b9d);
+    color: #4a2c5e;
+    border: 5px solid #6bcbff;
+    padding: 15px 30px;
+    font-size: 1.3rem;
+    font-weight: 900;
+    font-family: 'Comic Sans MS', 'Arial Black', cursive;
+    letter-spacing: 2px;
+    border-radius: 60px 20px 60px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 0 #4a8db7;
+    text-transform: uppercase;
+    width: 100%;
+    position: relative;
+}
+
+.btn-revelar:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 0 #4a8db7;
+}
+
+.btn-revelar:active {
+    transform: translateY(4px);
+    box-shadow: 0 4px 0 #4a8db7;
+}
+
+.btn-revelar .icono-boton {
+    display: inline-block;
+    animation: saltarBoton 1.5s ease-in-out infinite;
+}
+
+.btn-revelar .icono-boton:last-child {
+    animation-delay: 0.3s;
+}
+
+@keyframes saltarBoton {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px) rotate(10deg); }
+}
+
+.clausulas {
+    background: linear-gradient(135deg, #fff0f5, #fce4ec);
+    border-radius: 30px 10px 30px 10px;
+    padding: 0 22px;
+    margin-top: 0;
+    border-left: 8px solid #ffd93d;
+    border-right: 8px solid #ff6b9d;
+    border-bottom: 8px solid #6bcbff;
+    border-top: 8px solid #ffd93d;
+    box-shadow: inset 0 0 30px rgba(255,107,157,0.2);
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform: scaleY(0) rotate(-2deg);
+    transform-origin: top;
+}
+
+.clausulas.abierto {
+    max-height: 900px;
+    padding: 20px 22px;
+    opacity: 1;
+    transform: scaleY(1) rotate(0deg);
+    margin-top: 18px;
+}
+
+.clausulas h3 {
+    color: #4a2c5e;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    font-family: 'Comic Sans MS', 'Arial Black', cursive;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    text-shadow: 2px 2px 0 #ffd93d;
+    opacity: 0;
+    transition: opacity 0.4s ease 0.3s;
+    background: #ffd93d;
+    padding: 8px 20px;
+    border-radius: 40px;
+    border: 4px solid #ff6b9d;
+}
+
+.clausulas.abierto h3 {
+    opacity: 1;
+}
+
+.clausulas ul {
+    list-style: none;
+    padding: 0;
+}
+
+.clausulas ul li {
+    padding: 10px 0 10px 40px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23ff6b9d" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>') left center no-repeat;
+    background-size: 26px;
+    font-size: 1rem;
+    color: #4a2c5e;
+    font-weight: 600;
+    text-align: left;
+    border-bottom: 2px dashed #ffd93d;
+    transform: translateX(-30px) scale(0.8);
+    opacity: 0;
+    transition: all 0.5s ease;
+    font-family: 'Comic Sans MS', cursive;
+}
+
+.clausulas.abierto ul li {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+}
+
+.clausulas.abierto ul li:nth-child(1) { transition-delay: 0.1s; }
+.clausulas.abierto ul li:nth-child(2) { transition-delay: 0.2s; }
+.clausulas.abierto ul li:nth-child(3) { transition-delay: 0.3s; }
+.clausulas.abierto ul li:nth-child(4) { transition-delay: 0.4s; }
+.clausulas.abierto ul li:nth-child(5) { transition-delay: 0.5s; }
+.clausulas.abierto ul li:nth-child(6) { transition-delay: 0.6s; }
+
+.clausulas ul li:last-child {
+    border-bottom: none;
+}
+
+.clausulas ul li strong {
+    color: #ff6b9d;
+    background: #ffd93d;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-weight: 900;
+}
+
+.clausulas ul li em {
+    color: #6bcbff;
+    font-style: normal;
+    font-weight: bold;
+    background: #4a2c5e;
+    padding: 2px 12px;
+    border-radius: 20px;
+    color: #ffd93d;
+}
+
+/* ============================================
+   QR + VALIDACIÓN
+   ============================================ */
+.qr-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 20px 0 15px;
+    padding: 18px;
+    background: #fff0f5;
+    border-radius: 30px 10px 30px 10px;
+    border: 6px solid #ffd93d;
+    box-shadow: inset 0 0 0 4px #ff6b9d;
+}
+
+.qr-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.qr-container img {
+    width: 120px;
+    height: 120px;
+    border: 6px solid #ff6b9d;
+    border-radius: 30px 10px 30px 10px;
+    padding: 5px;
+    background: white;
+    box-shadow: 0 0 0 4px #ffd93d;
+    transition: transform 0.3s ease;
+}
+
+.qr-container img:hover {
+    transform: scale(1.05) rotate(-3deg);
+}
+
+/* Estilo específico para código de barras (mantener proporción) */
+.qr-container img.barcode {
+    width: 220px;
+    height: auto;
+    border-radius: 6px;
+    padding: 6px;
+    background: white;
+    box-shadow: 0 0 0 4px #ffd93d;
+}
+
+.qr-container p {
+    font-size: 0.7rem;
+    color: #4a2c5e;
+    margin-top: 8px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: #ffd93d;
+    padding: 5px 20px;
+    border-radius: 40px;
+    border: 3px solid #ff6b9d;
+    font-family: 'Comic Sans MS', cursive;
+}
+
+.validez {
+    flex: 1;
+    text-align: center;
+}
+
+.validez .sello {
+    background: #ff6b9d;
+    color: #ffd93d;
+    font-weight: 900;
+    font-size: 1.8rem;
+    padding: 10px 25px;
+    border-radius: 60px 20px 60px 20px;
+    transform: rotate(-8deg);
+    border: 6px solid #ffd93d;
+    display: inline-block;
+    box-shadow: 0 8px 0 #4a8db7;
+    font-family: 'Comic Sans MS', 'Arial Black', cursive;
+    letter-spacing: 3px;
+}
+
+.validez .fecha {
+    font-size: 0.9rem;
+    color: #4a2c5e;
+    font-weight: 900;
+    margin-top: 10px;
+    background: #6bcbff;
+    padding: 6px 25px;
+    border-radius: 40px;
+    display: inline-block;
+    border: 4px solid #ffd93d;
+    font-family: 'Comic Sans MS', cursive;
+}
+
+/* ============================================
+   FOOTER DEL CUPÓN
+   ============================================ */
+.footer-cupon {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 6px dotted #ff6b9d;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: #4a2c5e;
+    font-family: 'Comic Sans MS', cursive;
+}
+
+.firma {
+    font-family: 'Comic Sans MS', cursive;
+    font-size: 2rem;
+    color: #ff6b9d;
+    font-weight: 900;
+    text-shadow: 3px 3px 0 #ffd93d;
+}
+
+.firma span {
+    background: #ffd93d;
+    padding: 0 15px;
+    border-radius: 30px 10px 30px 10px;
+    border: 4px solid #6bcbff;
+}
+
+.richard-footer {
+    font-size: 2.2rem;
+    letter-spacing: 5px;
+    animation: flotarRichard 2.5s ease-in-out infinite;
+}
+
+.numero-serie {
+    background: #6bcbff;
+    color: #4a2c5e;
+    padding: 5px 18px;
+    border-radius: 40px;
+    font-weight: 900;
+    border: 4px solid #ffd93d;
+    font-family: 'Comic Sans MS', cursive;
+}
+
+.cupon-footer-texto {
+    margin-top: 15px;
+    font-size: 0.8rem;
+    color: #ff6b9d;
+    letter-spacing: 2px;
+    border-top: 4px dotted #ffd93d;
+    padding-top: 12px;
+    font-weight: bold;
+    font-family: 'Comic Sans MS', cursive;
+}
+
+/* ============================================
+   CONFETI
+   ============================================ */
+.confeti-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 100;
+    overflow: hidden;
+}
+
+.confeti {
+    position: absolute;
+    width: 10px;
+    height: 20px;
+    top: -20px;
+    opacity: 0;
+}
+
+.confeti.activo {
+    animation: caerConfeti var(--duracion) linear forwards;
+    opacity: 1;
+}
+
+@keyframes caerConfeti {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(110vh) rotate(720deg) scale(0.5);
+        opacity: 0;
+    }
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 550px) {
+    .gift-box {
+        width: 250px;
+        height: 250px;
+    }
+    .gift-bow {
+        width: 70px;
+        height: 55px;
+        top: -25px;
+    }
+    .bow-loop {
+        width: 40px;
+        height: 35px;
+    }
+    .bow-center {
+        width: 20px;
+        height: 20px;
+        top: 10px;
+    }
+    .gift-instruction {
+        font-size: 1rem;
+        padding: 8px 18px;
+        top: 0;
+    }
+    .gift-tag {
+        font-size: 0.6rem;
+        padding: 3px 10px;
+        bottom: 10px;
+        right: -5px;
+    }
+    .richard-avatar {
+        width: 80px;
+        height: 80px;
+        top: -40px;
+
+    }
+
+    .gift-box.abierto + .gift-instruction {
+        top: -50px;
+    }
+    .cupon-content {
+        margin-top: 20px;
+    }
+    .richard-header {
+        flex-wrap: wrap;
+        gap: 5px;
+        padding: 8px 15px;
+    }
+    .richard-header h1 {
+        font-size: 1.8rem;
+    }
+    .texto-cupon {
+        font-size: 2.2rem;
+    }
+    .qr-section {
+        flex-direction: column;
+    }
+    .footer-cupon {
+        flex-direction: column;
+        align-items: center;
+    }
+    .validez .sello {
+        font-size: 1.3rem;
+        padding: 8px 18px;
+    }
+    .btn-revelar {
+        font-size: 1rem;
+        padding: 12px 15px;
+    }
+}
+
+@media (max-width: 400px) {
+    .gift-box {
+        width: 200px;
+        height: 200px;
+    }
+    .gift-ribbon-vertical { width: 30px; }
+    .gift-ribbon-horizontal { height: 30px; }
+}

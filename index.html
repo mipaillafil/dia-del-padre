@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎁 Regalo para el Mejor Papá - Richard Waterson</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- === CAJA DE REGALO === -->
+        <div class="gift-box" id="giftBox">
+            <!-- LAZO -->
+            <div class="gift-bow">
+                <div class="bow-loop left"></div>
+                <div class="bow-loop right"></div>
+                <div class="bow-center"></div>
+            </div>
+
+            <!-- CUERPO -->
+            <div class="gift-body">
+                <div class="gift-ribbon-vertical"></div>
+                <div class="gift-ribbon-horizontal"></div>
+            </div>
+
+            <!-- ETIQUETA -->
+            <div class="gift-tag">🎁 ¡PARA TI!</div>
+        </div>
+
+        <!-- TEXTO INSTRUCCIONES -->
+        <div class="gift-instruction" id="instruccion">
+            👆 ¡Toca la caja para abrir tu regalo!
+        </div>
+
+        <!-- === CUPÓN (oculto inicialmente) === -->
+        <div class="cupon-container" id="cuponContainer">
+
+            <!-- CUPÓN RICHARD WATERSON -->
+            <div class="cupon">
+
+                <!-- CABEZA DE RICHARD -->
+                <div class="richard-avatar">
+                    <!-- ⚠️ CAMBIA LA URL POR TU PNG DE RICHARD ⚠️ -->
+                    <img src="img/icono.jpg" alt="Richard Waterson">
+                </div>
+
+                <div class="cupon-content">
+
+                    <!-- CABECERA -->
+                    <div class="richard-header">
+                        <h1>MALLAY CUPÓN</h1>
+                    </div>
+
+                    <div class="subtitulo">★ DÍA DEL PADRE ★</div>
+
+                    <!-- TEXTO PRINCIPAL -->
+                    <div class="texto-cupon">
+                        VALE POR UN <br>
+                        <span class="limon">🍋 PIE DE LIMÓN 🍋</span>
+                    </div>
+
+                    <!-- CLÁUSULAS OCULTAS -->
+                    <div class="clausulas-container">
+                        <button class="btn-revelar" id="btnRevelarClausulas">
+                            <span class="icono-boton">📜</span>
+                            ¡REVELAR CLAÚSULAS!
+                            <span class="icono-boton">📜</span>
+                        </button>
+
+                        <div class="clausulas" id="clausulasRichard">
+                            <ul>
+                                <li><strong>Artículo 1:</strong> Cupón no válido para semanas de pruebas.</li>
+                                <li><strong>Artículo 2:</strong> Avisar con anticipación antes de canjear.</li>
+                                <li><strong>Artículo 3:</strong> Compra de ingredientes sujeto a conversación.</li>
+                                <li><strong>Artículo 4:</strong> Cupón no transferible.</li>
+                                <li><strong>Artículo 5:</strong> El cupón es válido hasta 6 meses después de la fecha de emisión.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- QR + SELLO -->
+                    <div class="qr-section">
+                        <div class="qr-container">
+                            <!-- ⚠️ CAMBIA EL QR POR EL TUYO ⚠️ -->
+                            <img src="img/codigo.jpg" alt="Código de Barras" class="barcode">
+                        </div>
+                        <div class="validez">
+                            <div class="sello">✔ ¡VÁLIDO!</div>
+                            <div class="fecha">📅 Día del Padre 2026</div>
+                        </div>
+                    </div>
+
+                    <!-- FOOTER -->
+                    <div class="footer-cupon">
+                        <div>
+                            <strong>🐰 Firmado por:</strong>
+                            <span class="firma"><span>Mallay</span></span>
+                        </div>
+                        <div class="richard-footer">
+                        </div>
+                        <div>
+                            <strong>🎫 Nº de Serie:</strong>
+                            <span class="numero-serie">#MC-002</span>
+                        </div>
+                    </div>
+
+                    <p class="cupon-footer-texto">
+                        ─── "Válido por 6 meses desde su fecha de emisión" ───
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- === CONFETI === -->
+        <div class="confeti-container" id="confetiContainer"></div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
